@@ -44,17 +44,17 @@ p {
       margin-top: 20px;
   }
 
-  .chances {
+  #chances {
       color: lightskyblue;
       font-weight: bold;
   }
 
-  .correct {
+  #correct {
       color: darkgreen;
       font-weight: bold;
   }
 
-  .incorrect {
+  #incorrect {
       color: darkred;
       font-weight: bold;
   }

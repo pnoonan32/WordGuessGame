@@ -212,6 +212,19 @@ var countries = [
 
 
     // functions to keep track of game statistics
+    function gameStatistics (chances, correct, incorrect) {
+        this.chances = chances;
+        this.correct = correct;
+        this.incorrect = incorrect;
+    }
+
+    var gameResults = new gameStatistics(10, 8, 2); 
+
+    
+    //to display gameResults once game is attempted
+    document.getElementById("chances").innerHTML = "Chances Remaining: " + gameResults.chances;
+    document.getElementById("correct").innerHTML = "Letters guessed correctly so far: " + gameResults.correct;
+    document.getElementById("incorrect").innerHTML = "Recorded attempt(s): " + gameResults.incorrect;
 
 
 
@@ -219,11 +232,11 @@ var countries = [
 
     // On click events for the letters to display on page
 
-    function hangman() {
-       var hangmanLetters =  document.querySelector('letters');
-       hangmanLetters.addEventListener('click', function() {
-           console.log(hangmanLetters(hangman));
-       })   
+    function hangmanletters() {
+        var letters;
+       letters.addEventListener('click', function() {
+        document.getElementsByClassName("letters").innerHTML = letters; 
+       });   
     }        
  
 
@@ -236,4 +249,4 @@ var countries = [
     // conditions for when the user wins
 
 
-        // conditions for when the user loses
+    // conditions for when the user loses
