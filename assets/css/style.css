@@ -1,0 +1,67 @@
+* {
+    padding: 0;
+    margin: 0;
+}
+
+h1 {
+    color: darkgreen;
+    margin-top: 15px;
+}
+
+p {
+    color: darkgreen;
+}
+
+.instructions {
+    color: darkorange;
+    font-weight: bold;
+    width: 80%;
+    margin: 20px auto;
+}
+
+.hangContain {
+    border: 1px dashed black;
+    width: 75%;
+    height: 375px; 
+    margin-bottom: 10px;
+  }
+
+  .letters {
+      display: inline-block;
+      margin-top: 35px;
+      padding: 5px;
+      cursor: pointer;   
+      color: darkseagreen;
+    font-size: 1.5rem;
+    font-weight: bold;
+  }
+
+  .letters:hover {
+    color: lightskyblue;
+  }
+
+  .gameStats {
+      margin-top: 20px;
+  }
+
+  .chances {
+      color: lightskyblue;
+      font-weight: bold;
+  }
+
+  .correct {
+      color: darkgreen;
+      font-weight: bold;
+  }
+
+  .incorrect {
+      color: darkred;
+      font-weight: bold;
+  }
+
+
+#map {
+    height: 500px;
+    width: 75%;
+    margin: 30px auto;
+}
