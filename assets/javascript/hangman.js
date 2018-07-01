@@ -196,49 +196,116 @@ var countries = [
     'Virgin Islands (US)',
     'Yemen',
     'Zambia',
-    'Zimbabwe' ]
+    'Zimbabwe'];
 
+// To ensure the letters of the randomly selected country are all lower case //
+var randomCountry = countries[Math.floor(Math.random() * countries.length)].toLowerCase();
+// To ensure the letters of the randomly selected country are all lower case/  //
 
+var alphabet = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
+var answer = [];
+var blanks = [];
+var selectedCountry = randomCountry.split('').join('');
+var chancesRemaining = 10;
+var incorrectAttempts = 0;
+var totalAttempts = 0;
+var incorrectGuesses = [];
+console.log(selectedCountry);
 
-    // to randomly select the country to be guessed
+// to randomly select the country to be guessed
+function selectRandomCountry() {
 
-    function selectRandomCountry () {
-        for (var i = 0; i < countries.length; i++) {
-            Math.random(i)
-        }
+    for (var i = 0; i < randomCountry.length; i++) {
+        blanks.push('_'); 
     }
+// arrarray.push(singleCharacter)
+    // "_"
+    // var blanks = ["_","_","_"]
+
+    var underscores =  document.getElementById("underscores");
+    underscores.innerHTML = blanks.join(' ');
+    // document.getElementById("underscores").innerHTML = blanks.join(' ');
+
+ }
+
+selectRandomCountry();
 
 
-
-
-    // functions to keep track of game statistics
-    function gameStatistics (chances, correct, incorrect) {
-        this.chances = chances;
-        this.correct = correct;
-        this.incorrect = incorrect;
-    }
-
-    var gameResults = new gameStatistics(10, 8, 2); 
-
+function checkLetters(letters) {
+var userGuess = letters;    
     
-    //to display gameResults once game is attempted
-    document.getElementById("chances").innerHTML = "Chances Remaining: " + gameResults.chances;
-    document.getElementById("correct").innerHTML = "Letters guessed correctly so far: " + gameResults.correct;
-    document.getElementById("incorrect").innerHTML = "Recorded attempt(s): " + gameResults.incorrect;
+    if ( selectedCountry.indexOf(userGuess) < 0 ) {
+        // Incremnt incorrect guess
+        incorrectAttempts++;        
+        // Decrement chances remaining
+        chancesRemaining--;    
+        // Push the userguess into the incorrectGuesses array
+        incorrectGuesses.push(userGuess);
+
+        console.log("You are incorrect!");
+    }  
+
+}
+checkLetters();
+
+
+function alphabetButtons() {
+    var seperatedLetters = document.getElementById("letters");
+
+    for ( var i = 0; i < alphabet.length; i++ ) {
+        
+        var letters = document.createElement("button");
+        letters.innerHTML = alphabet[i];
+        
+        
+        // Add id to each individual button
+        letters.setAttribute("id", "letterbtn");
+        // Adds value attribute to each button
+        letters.setAttribute("value", alphabet[i]);
+        // Add onclick attribute to each button
+        letters.setAttribute("onclick", "checkLetters('" + alphabet[i] + "')");
+        seperatedLetters.appendChild(letters);
+    }
+     //  document.getElementById("letters").innerHTML = alphabet;
+     // This is to split the array "alphabet" into individual strings
+     
+    }
+    alphabetButtons();
 
 
 
 
 
-    // On click events for the letters to display on page
 
-    function hangmanletters() {
-        var letters;
-       letters.addEventListener('click', function() {
-        document.getElementsByClassName("letters").innerHTML = letters; 
-       });   
-    }        
- 
+
+
+// functions to keep track of game statistics
+function gameStatistics() {
+
+// To display "Chances Remaining" on webpage
+document.getElementById("chances").innerHTML = "Chances Remaining: " + chancesRemaining--;
+document.getElementById("letters").addEventListener('click', function() {
+
+});
+
+
+// To display "incorrect Attempts" on webpage
+document.getElementById("incorrect").innerHTML = "Incorrect Attempt(s): " + incorrectAttempts++;
+
+// To display "total attempts" on webpage
+document.getElementById("attempts").innerHTML = "Total Recorded Attempts: " + totalAttempts++;
+}
+gameStatistics();
+    
+    
+
+function userInput() {
+    
+}
+                    
+
+
+
 
 
 
@@ -247,6 +314,17 @@ var countries = [
 
 
     // conditions for when the user wins
+    function gameResults () {
+        var gameOver = "Thanks for playing"
+
+        if ( chancesRemaining === 0 ) {
+            gameOver = " ";
+        }
+    }
 
 
     // conditions for when the user loses
+
+    // Create a results report
+
+    // Add option/button to play the game again

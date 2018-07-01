@@ -26,17 +26,18 @@ p {
     margin-bottom: 10px;
   }
 
-  .letters {
+  button {
       display: inline-block;
       margin-top: 35px;
-      padding: 5px;
+      padding: 10px;
       cursor: pointer;   
-      color: darkseagreen;
+      color: #f4f4f4;
+      background: linear-gradient(#1488cc, #2b32b2);
     font-size: 1.5rem;
     font-weight: bold;
   }
 
-  .letters:hover {
+  button:hover {
     color: lightskyblue;
   }
 
@@ -59,9 +60,35 @@ p {
       font-weight: bold;
   }
 
+  #attempts {
+      color: #f4f4f4;
+      font-weight: bold;
+  }
+
+ #letterbtn {
+     border: none;
+     border-radius: 2px; 
+     margin: 5px; 
+ }
+
+ #underscores {
+     text-align: center;
+     letter-spacing: 10px;
+     color: white;  
+     
+ }
+
 
 #map {
     height: 500px;
     width: 75%;
     margin: 30px auto;
 }
+
+
+
+/* Hangman Strucuture */
+
+
+
+/* Hangman Strucuture / */

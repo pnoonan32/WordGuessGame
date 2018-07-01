@@ -12,11 +12,12 @@
     <link rel="shortcut icon" type="image/png" href="myFavicon.png">
 </head>
 
+
 <!-- Introduction -->
 <body class="bg-secondary">
-    <h1 class="text-center">Hangman with Google API</h1>
+    <h1 class="text-center">Hangman with Google Maps API</h1>
     <p class="text-center">The theme of this game is Countries. Can you guess the correct country?</p>
-<!-- Introduction /-->
+    <!-- Introduction /-->
 
 
 
@@ -39,71 +40,52 @@
             </div>
         </div>
     </div>
-       <!-- The structure of the hangman figure /-->
+    <!-- The structure of the hangman figure /-->
 
 
-     
-     
 
-       <!-- Game Statistics -->
+    <!-- The underscores are for the name of the countries length -->
+    <p id="underscores" class="mt-5"></p>
+    <!-- The underscores are for the name of the countries length /-->
+
+
+
+
+
+    <!-- Game Statistics -->
     <div class="gameStats">
-        <!-- <p class="chances">Chances Remaining: 10</p> -->
-        <!-- <p class="correct">Letters guessed correctly so far:</p>
-        <p class="incorrect">Incorrect attempt(s): </p> -->
         <p id="chances"></p>
         <p id="correct"></p>
-        <p id="incorrect"></p> 
+        <p id="incorrect"></p>
+        <p id="attempts"></p>
     </div>
-       <!-- Game Statistics /-->
+    <!-- Game Statistics /-->
 
-       <!-- Instructions Section -->
+    <!-- Instructions Section -->
     <div class="text-center">
         <h1 class="instructions">Instructions</h1>
         <p class="instructions">In this game you will have 10 attempts to guess the randomly selected country. The map provided below will start
             in the United States. If the country is guessed correctly, the country will be displayed on the map provided
             below. If the country was not correctly guessed, then you lose! </p>
     </div>
-      <!-- Instructions Section /-->
+    <!-- Instructions Section /-->
 
 
 
-      <!-- List of letters to choose from-->
+    <!-- platform of the list of letters to choose from-->
     <div class="row text-center">
         <div class="col-sm-12 text-center">
-            <h2 class="letters">A</h2>
-            <h2 class="letters">B</h2>
-            <h2 class="letters">C</h2>
-            <h2 class="letters">D</h2>
-            <h2 class="letters">E</h2>
-            <h2 class="letters">F</h2>
-            <h2 class="letters">G</h2>
-            <h2 class="letters">H</h2>
-            <h2 class="letters">I</h2>
-            <h2 class="letters">J</h2>
-            <h2 class="letters">K</h2>
-            <h2 class="letters">L</h2>
-            <h2 class="letters">M</h2>
-            <h2 class="letters">N</h2>
-            <h2 class="letters">O</h2>
-            <h2 class="letters">P</h2>
-            <h2 class="letters">Q</h2>
-            <h2 class="letters">R</h2>
-            <h2 class="letters">S</h2>
-            <h2 class="letters">T</h2>
-            <h2 class="letters">U</h2>
-            <h2 class="letters">V</h2>
-            <h2 class="letters">W</h2>
-            <h2 class="letters">X</h2>
-            <h2 class="letters">Y</h2>
-            <h2 class="letters">Z</h2>
+            <!-- List of letters to choose from /-->
+            <div id="letters"></div>
+            <!-- List of letters to choose from /-->
         </div>
     </div>
-     <!-- List of letters to choose from /-->
+    <!-- platform of the list of letters to choose from /-->
 
 
 
 
-     <!-- Google API Code -->
+    <!-- Google API Code -->
     <div id="map"></div>
 
     <script>
@@ -117,7 +99,7 @@
     </script>
 
     <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDN6CnR706rEeElDTnrix6MC_Qjmq6o1z4&callback=initMap"></script>
-     <!-- Google API Code /-->
+    <!-- Google API Code /-->
 
 
 
