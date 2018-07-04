@@ -198,18 +198,24 @@ var countries = [
     'Zambia',
     'Zimbabwe'];
 
-// To ensure the letters of the randomly selected country are all lower case //
-var randomCountry = countries[Math.floor(Math.random() * countries.length)].toLowerCase();
-// To ensure the letters of the randomly selected country are all lower case/  //
+// To ensure the letters of the randomly selected country are all  Uppercase //
+var randomCountry = countries[Math.floor(Math.random() * countries.length)].toUpperCase();
+// To ensure the letters of the randomly selected country are all lower UpperCase/  //
 
 var alphabet = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
 var answer = [];
 var blanks = [];
+
 var selectedCountry = randomCountry.split('').join('');
+// var something = selectedCountry.split(" ").join("");
 var chancesRemaining = 10;
 var incorrectAttempts = 0;
 var totalAttempts = 0;
 var incorrectGuesses = [];
+var correctGuesses = [];
+
+// Define what userGuess variable will be
+var userGuess;
 console.log(selectedCountry);
 
 // to randomly select the country to be guessed
@@ -218,35 +224,49 @@ function selectRandomCountry() {
     for (var i = 0; i < randomCountry.length; i++) {
         blanks.push('_'); 
     }
-// arrarray.push(singleCharacter)
-    // "_"
-    // var blanks = ["_","_","_"]
-
-    var underscores =  document.getElementById("underscores");
-    underscores.innerHTML = blanks.join(' ');
-    // document.getElementById("underscores").innerHTML = blanks.join(' ');
-
+    var underscoreHTML =  document.getElementById("underscores");
+    underscoreHTML.innerHTML = blanks.join(' ');
  }
-
 selectRandomCountry();
+
+function checkForGuess (userGuess) {
+    for (var i = 0; i < selectedCountry.length; i++) {
+        if (userGuess === selectedCountry[i].toUpperCase()) {
+            blanks[i] = userGuess
+            var underscoreHTML =  document.getElementById("underscores");
+            underscoreHTML.innerHTML = blanks.join(' ');
+        }
+    }
+}
+
 
 
 function checkLetters(letters) {
-var userGuess = letters;    
-    
-    if ( selectedCountry.indexOf(userGuess) < 0 ) {
+    var userGuess = letters  
+    // Incorrect guess
+    if ( selectedCountry.indexOf(userGuess) < 0 && incorrectGuesses.indexOf(userGuess) < 0 )  {
+
         // Incremnt incorrect guess
         incorrectAttempts++;        
         // Decrement chances remaining
         chancesRemaining--;    
         // Push the userguess into the incorrectGuesses array
         incorrectGuesses.push(userGuess);
-
+        totalAttempts++;
         console.log("You are incorrect!");
     }  
+    if  ( selectedCountry.indexOf(userGuess) >= 0 && correctGuesses.indexOf(userGuess) < 0 ) {
+        totalAttempts++;
+        checkForGuess(userGuess);
 
+        correctGuesses.push(userGuess);
+    }
+    // if statement if guess is correct
+    
+    gameStatistics();
+    gameResults();
 }
-checkLetters();
+
 
 
 function alphabetButtons() {
@@ -279,52 +299,167 @@ function alphabetButtons() {
 
 
 
-// functions to keep track of game statistics
+// To keep track of peformace during game
 function gameStatistics() {
 
 // To display "Chances Remaining" on webpage
-document.getElementById("chances").innerHTML = "Chances Remaining: " + chancesRemaining--;
-document.getElementById("letters").addEventListener('click', function() {
+document.getElementById("chances").innerHTML = "Chances Remaining: " + chancesRemaining;
 
-});
 
 
 // To display "incorrect Attempts" on webpage
-document.getElementById("incorrect").innerHTML = "Incorrect Attempt(s): " + incorrectAttempts++;
+document.getElementById("incorrect").innerHTML = "Incorrect Attempt(s): " + incorrectAttempts;
 
 // To display "total attempts" on webpage
-document.getElementById("attempts").innerHTML = "Total Recorded Attempts: " + totalAttempts++;
+document.getElementById("attempts").innerHTML = "Total Recorded Attempts: " + totalAttempts;
 }
 gameStatistics();
     
     
 
-function userInput() {
-    
+// The  individual letters of the randomly selected countries
+function countryChoices() {
+    var underscores = document.getElementById('underscores');
+    var selectedLetter = document.getElementById('letters');
+    for ( var i = 0; i < selectedCountry.length; i++) {
+        if ( randomCountry.indexOf(selectedCountry) === alphabet ) {
+            selectedLetter.addEventListener('click', function() {
+                 underscores.replaceWith(selectedCountry[i]);
+            });
+        }
+    }
 }
-                    
-
-
-
-
-
 
 
     // display the country selected, whether or not it was guessed correctly
 
-
+console.log(blanks.join("").toUpperCase())
+console.log(randomCountry.toUpperCase())
     // conditions for when the user wins
-    function gameResults () {
-        var gameOver = "Thanks for playing"
-
-        if ( chancesRemaining === 0 ) {
-            gameOver = " ";
-        }
+var gameOver = "Thanks for playing";
+function gameResults() {
+    if (chancesRemaining <= 0) {
+        console.log("You lose!!!!")
     }
 
+    if (blanks.join("").toUpperCase() === randomCountry.toUpperCase()) {
+        console.log("you win!!!!!!!!!!");
+        
+    }
+}
 
-    // conditions for when the user loses
 
-    // Create a results report
 
-    // Add option/button to play the game again
+
+ // Call Geocode
+    // geocode();
+
+    // Get location form
+    var locationForm = document.getElementById('location-form');
+
+// Listen for submiot
+locationForm.addEventListener('submit', geocode);
+
+function geocode(event){
+  // Prevent actual submit
+  event.preventDefault();
+
+  var location = document.getElementById('location-input').value;
+
+  axios.get('https://maps.googleapis.com/maps/api/geocode/json',{
+    params:{
+      address:location,
+      key:'AIzaSyDN6CnR706rEeElDTnrix6MC_Qjmq6o1z4'
+    }
+  })
+  .then(function(response){
+    // Log full response
+    console.log(response);
+
+    // Formatted Address
+    var formattedAddress = response.data.results[0].formatted_address;
+    var formattedAddressOutput = `
+      <ul class="list-group">
+        <li class="list-group-item">${formattedAddress}</li>
+      </ul>
+    `;
+
+    // Address Components
+    var addressComponents = response.data.results[0].address_components;
+    var addressComponentsOutput = '<ul class="list-group">';
+    for(var i = 0; i < addressComponents.length;i++){
+      addressComponentsOutput += `
+        <li class="list-group-item"><strong>${addressComponents[i].types[0]}</strong>: ${addressComponents[i].long_name}</li>
+      `;
+    }
+    addressComponentsOutput += '</ul>';
+
+    // Geometry
+    var lat = response.data.results[0].geometry.location.lat;
+    var lng = response.data.results[0].geometry.location.lng;
+    var geometryOutput = `
+      <ul class="list-group">
+        <li class="list-group-item"><strong>Latitude</strong>: ${lat}</li>
+        <li class="list-group-item"><strong>Longitude</strong>: ${lng}</li>
+      </ul>
+    `;
+
+    // Output to app
+    document.getElementById('formatted-address').innerHTML = formattedAddressOutput;
+    document.getElementById('address-components').innerHTML = addressComponentsOutput;
+    document.getElementById('geometry').innerHTML = geometryOutput;
+  })
+  .catch(function(error){
+    console.log(error);
+  });
+}
+
+
+
+
+
+// var openMap = function() {
+//   // Clears the map div
+//   $("#map").empty();
+//   var apiKey = "";// plug in key
+//   var queryURL =
+//     "https://maps.googleapis.com/maps/api/geocode/json?address=" +
+//     city +
+//     "," +
+//     state +
+//     "&key=AIzaSyDN6CnR706rEeElDTnrix6MC_Qjmq6o1z4";
+//   // Calls the Geocoding API to retrieve the Lat. and Lon. of searched city
+//   $.ajax({
+//     url: queryURL,
+//     method: "GET"
+//   }).then(function(response) {
+//     var latitude = response.results[0].geometry.location.lat;
+//     // console.log(latitude);
+//     var longitude = response.results[0].geometry.location.lng;
+//     // console.log(longitude)
+
+//     // Function that takes the converted lat and lon and places a marker on that spot with a map around it
+//     function initMap() {
+//       var uluru = { lat: latitude, lng: longitude };
+//       var map = new google.maps.Map(document.getElementById("map"), {
+//         zoom: 13,
+//         center: uluru
+//       });
+
+//       var marker = new google.maps.Marker({
+//         position: uluru,
+//         map: map
+//       });
+//     }
+
+//     initMap();
+//   });
+// };
+
+
+// Things to do after class:
+
+// 1. Look up google geocoding specifically for countries
+// 2. Make end game results more animated 
+// 3. Add physical hangman features
+// Maybe add a fun fact for when the map and animated message appears
