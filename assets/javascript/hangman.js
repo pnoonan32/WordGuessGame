@@ -219,12 +219,14 @@ var openMap = function(country) {
  function gameResults() {
  
      if (chancesRemaining <= 0) {
-         gameResult.html('You lose!!!!').modal('show');
+         gameResult.html('Sorry, it looks like you were unable to successfully guess the correct country.');
+         modal.modal('show');
      }
      
      if (blanks.join("").toUpperCase() === randomCountry.toUpperCase()) {
          $('#victory-modal').show()
-         gameResult.html('you win!!!!!!!!!!').modal('show');
+         gameResult.html('Congratulations, you guessed the randomly selected country!!');
+         modal.modal('show');
          openMap(randomCountry);
      }
  }

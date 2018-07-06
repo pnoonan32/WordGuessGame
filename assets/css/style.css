@@ -13,7 +13,7 @@ p {
 }
 
 .instructions {
-    color: darkorange;
+    color: #4b6cb7;
     font-weight: bold;
     width: 80%;
     margin: 20px auto;
@@ -56,12 +56,12 @@ p {
   }
 
   #incorrect {
-      color: darkred;
+      color: red;
       font-weight: bold;
   }
 
   #attempts {
-      color: #f4f4f4;
+      color: #52bab3;
       font-weight: bold;
   }
 
@@ -89,19 +89,137 @@ p {
     margin-top: 50px;
 }
 
+/* To custimize the buttons for the alphabet */
+
+button#letterbtn {
+    background: linear-gradient(#00c6ff, #0072ff);
+    color: whitesmoke;
+    font-size: 18px;
+    padding: 10px;
+    font-weight: bold;
+    font-family: Arial, Helvetica, sans-serif;
+    cursor: pointer;
+}
+
+/* To custimize the buttons for the alphabet  / */
+
+
+
+
+/* Hangman Strucuture */
+
 .hangman-piece {
     display: none;
     width: 50px;
     height: 50px;
-    margin: 10px;
+    margin: 5px;
     background-color: black;
 }
 
+/* Hangman pieces (in order) */
 .hangman-piece.active {
     display: block;
 }
-/* Hangman Strucuture */
+
+/* To organize the first 2 elements for the post and rope */
+.postUp.hangman-piece.active,
+.postRight.hangman-piece.active {
+    display: inline-block;
+    margin: 1px;
+}
+/* To organize the first 2 elements for the post and rope  / */
+
+.postUp.hangman-piece.active {
+    width: 15px;
+    height: 365px; 
+    background-color: black;
+}
+
+.postRight.hangman-piece.active {
+    width: 250px;
+    height: 10px;
+    position: absolute;
+    background-color: black;
+}
 
 
+.rope.hangman-piece.active {
+    width: 5px;
+    height: 150px;
+    background-color: black;
+    margin-left: 265px;
+    bottom: 366px;
+    position: relative;
+}
+
+.head.hangman-piece.active {
+    width: 30px;
+    height: 30px;
+    margin-left: 252px;
+    bottom: 370px;
+    position: relative;
+    background-color: black;
+}
+
+.body.hangman-piece.active {
+    width: 18px;
+    height: 40px;
+    margin-left: 258px;
+    bottom: 374px;
+    position: relative;
+    background-color: black;
+}
+
+.leftArm.hangman-piece.active {
+    width: 5px;
+    height: 20px;
+    margin-left: 247px;
+    bottom: 414px;
+    position: relative;
+    transform: rotate(130deg);
+    background-color: black;
+}
+
+
+.rightArm.hangman-piece.active {
+    width: 5px;
+    height: 20px;
+    margin-left: 281px;
+    bottom: 440px;
+    position: relative;
+    transform: rotate(45deg);
+    background-color: black;
+}
+
+.leftLeg.hangman-piece.active {
+    width: 5px;
+    height: 20px;
+    margin-left: 250px;
+    bottom: 432px;
+    position: relative;
+    transform: rotate(40deg);
+    background-color: black;
+}
+
+.rightLeg.hangman-piece.active {
+    width: 5px;
+    height: 20px;
+    margin-left: 279px;
+    bottom: 457px;
+    position: relative;
+    transform: rotate(140deg);
+    background-color: black;
+}
+
+.floor.hangman-piece.active {
+    width: 250px;
+    height: 7px;
+    position: relative;
+    margin: 0;
+    bottom: 345px;
+    background-color: black;
+}
+
+/* Hangman pieces (in order)  / */
 
 /* Hangman Strucuture / */

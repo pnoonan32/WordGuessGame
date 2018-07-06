@@ -15,15 +15,15 @@
 
 
 <!-- Introduction -->
-<body class="bg-secondary">
+<body>
     <h1 class="text-center">Hangman with Google Maps API Beta</h1>
     <p class="text-center">The theme of this game is Countries. Can you guess the correct country?</p>
     <!-- Introduction /-->
 
     <!-- The structure of the hangman figure -->
     <div class="container-fluid">
-        <div class="row">
-            <div class="col-sm-8 mx-auto">
+        <div class="row"> 
+             <div class="col-sm-8 mx-auto"> 
                 <div class='hangContain mx-auto'>
                     <div class='postUp hangman-piece'></div>
                     <div class='postRight hangman-piece'></div>
@@ -95,6 +95,7 @@
 
 
 <!-- Modal Section -->
+<div id="modalWin">
     <div class="modal fade" id="result-modal" tabindex="-1" role="dialog">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -105,16 +106,17 @@
                 </button>
             </div>
             <div class="modal-body">
-                <p>Modal body text goes here.</p>
+                <p style="color: #182848">Click either the exit (x) button on the top right of this modal, or click the "Close" button to see the country that you attempted to guess.</p>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-secondary">Try Again</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Try Again</button>  <!-- Add a try again feature after submitting the prototype version -->
             </div>
             </div>
         </div>
     </div>
-<!-- Modal Section -->
+</div>
+<!-- Modal Section /-->
 
 
 
@@ -126,7 +128,7 @@
         <form id="location-form">
             <input type="text" id="location-input" class="form-control form-control-lg">
         <br>
-        <button type="submit" class="btn btn-primary btn-block">Submit</button>
+        <button type="submit" class="btn btn-outline-success btn-block">Submit</button>
         </form>
         <div class="card-block" id="formatted-address"></div>
         <div id="address-components"></div>
