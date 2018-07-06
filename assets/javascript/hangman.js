@@ -164,7 +164,49 @@ var countries = [
  }
  
  
-     // display the country selected, whether or not it was guessed correctly
+
+ function initMap(latitude,longitude) {
+    var uluru = { lat: latitude, lng: longitude };
+    var map = new google.maps.Map(document.getElementById("map"), {
+      zoom: 5,
+      center: uluru
+    });
+
+    var marker = new google.maps.Marker({
+      position: uluru,
+      map: map
+    });
+  }
+
+
+
+var openMap = function(country) {
+  // Clears the map div
+  $("#map").empty();
+  var apiKey = "AIzaSyDN6CnR706rEeElDTnrix6MC";// plug in key
+  var queryURL =
+    "https://maps.googleapis.com/maps/api/geocode/json?address=" +
+    country +
+    "&key=AIzaSyDN6CnR706rEeElDTnrix6MC_Qjmq6o1z4";
+  // Calls the Geocoding API to retrieve the Lat. and Lon. of searched city
+  $.ajax({
+    url: queryURL,
+    method: "GET"
+  }).then(function(response) {
+    var latitude = response.results[0].geometry.location.lat;
+    // console.log(latitude);
+    var longitude = response.results[0].geometry.location.lng;
+    // console.log(longitude)
+
+    // Function that takes the converted lat and lon and places a marker on that spot with a map around it
+    
+
+    initMap(latitude, longitude);
+  });
+};
+
+
+   //  display the country selected, whether or not it was guessed correctly
  
  console.log(blanks.join("").toUpperCase())
  console.log(randomCountry.toUpperCase())
@@ -173,129 +215,127 @@ var countries = [
  var gameOver = "Thanks for playing";
  var modal = $('#result-modal');
  var gameResult = $('#game-result');
+
  function gameResults() {
  
      if (chancesRemaining <= 0) {
-         gameResult.html('You lose!!!!');
-         modal.show();
+         gameResult.html('You lose!!!!').modal('show');
      }
      
      if (blanks.join("").toUpperCase() === randomCountry.toUpperCase()) {
          $('#victory-modal').show()
-         gameResult.html('you win!!!!!!!!!!');
-         modal.show();
+         gameResult.html('you win!!!!!!!!!!').modal('show');
+         openMap(randomCountry);
      }
  }
  
  
  
  
-  // Call Geocode
-     // geocode();
+//   // Call Geocode
+//      // geocode();
  
-     // Get location form
-     var locationForm = document.getElementById('location-form');
+//      // Get location form
+//      var locationForm = document.getElementById('location-form');
  
- // Listen for submiot
- locationForm.addEventListener('submit', geocode);
+//  // Listen for submit
+//  locationForm.addEventListener('submit', geocode);
  
- function geocode(event){
-   // Prevent actual submit
-   event.preventDefault();
+//  function geocode(event){
+//    // Prevent actual submit
+//    event.preventDefault();
  
-   var location = document.getElementById('location-input').value;
+//    var location = document.getElementById('location-input').value;
  
-   axios.get('https://maps.googleapis.com/maps/api/geocode/json',{
-     params:{
-       address:location,
-       key:'AIzaSyDN6CnR706rEeElDTnrix6MC_Qjmq6o1z4'
-     }
-   })
-   .then(function(response){
-     // Log full response
-     console.log(response);
+//    axios.get('https://maps.googleapis.com/maps/api/geocode/json',{
+//      params:{
+//        address:location,
+//        key:'AIzaSyDN6CnR706rEeElDTnrix6MC_Qjmq6o1z4'
+//      }
+//    })
+//    .then(function(response){
+//      // Log full response
+//      console.log(response);
  
-     // Formatted Address
-     var formattedAddress = response.data.results[0].formatted_address;
-     var formattedAddressOutput = `
-       <ul class="list-group">
-         <li class="list-group-item">${formattedAddress}</li>
-       </ul>
-     `;
+//      // Formatted Address
+//      var formattedAddress = response.data.results[0].formatted_address;
+//      var formattedAddressOutput = `
+//        <ul class="list-group">
+//          <li class="list-group-item">${formattedAddress}</li>
+//        </ul>
+//      `;
  
-     // Address Components
-     var addressComponents = response.data.results[0].address_components;
-     var addressComponentsOutput = '<ul class="list-group">';
-     for(var i = 0; i < addressComponents.length;i++){
-       addressComponentsOutput += `
-         <li class="list-group-item"><strong>${addressComponents[i].types[0]}</strong>: ${addressComponents[i].long_name}</li>
-       `;
-     }
-     addressComponentsOutput += '</ul>';
+//      // Address Components
+//      var addressComponents = response.data.results[0].address_components;
+//      var addressComponentsOutput = '<ul class="list-group">';
+//      for(var i = 0; i < addressComponents.length;i++){
+//        addressComponentsOutput += `
+//          <li class="list-group-item"><strong>${addressComponents[i].types[0]}</strong>: ${addressComponents[i].long_name}</li>
+//        `;
+//      }
+//      addressComponentsOutput += '</ul>';
  
-     // Geometry
-     var lat = response.data.results[0].geometry.location.lat;
-     var lng = response.data.results[0].geometry.location.lng;
-     var geometryOutput = `
-       <ul class="list-group">
-         <li class="list-group-item"><strong>Latitude</strong>: ${lat}</li>
-         <li class="list-group-item"><strong>Longitude</strong>: ${lng}</li>
-       </ul>
-     `;
+//      // Geometry
+//      var lat = response.data.results[0].geometry.location.lat;
+//      var lng = response.data.results[0].geometry.location.lng;
+//      var geometryOutput = `
+//        <ul class="list-group">
+//          <li class="list-group-item"><strong>Latitude</strong>: ${lat}</li>
+//          <li class="list-group-item"><strong>Longitude</strong>: ${lng}</li>
+//        </ul>
+//      `;
  
-     // Output to app
-     document.getElementById('formatted-address').innerHTML = formattedAddressOutput;
-     document.getElementById('address-components').innerHTML = addressComponentsOutput;
-     document.getElementById('geometry').innerHTML = geometryOutput;
-   })
-   .catch(function(error){
-     console.log(error);
-   });
- }
- 
- 
+//      // Output to app
+//      document.getElementById('formatted-address').innerHTML = formattedAddressOutput;
+//      document.getElementById('address-components').innerHTML = addressComponentsOutput;
+//      document.getElementById('geometry').innerHTML = geometryOutput;
+//    })
+//    .catch(function(error){
+//      console.log(error);
+//    });
+//  }
  
  
  
- // var openMap = function() {
- //   // Clears the map div
- //   $("#map").empty();
- //   var apiKey = "AIzaSyDN6CnR706rEeElDTnrix6MC";// plug in key
- //   var queryURL =
- //     "https://maps.googleapis.com/maps/api/geocode/json?address=" +
- //     city +
- //     "," +
- //     state +
- //     "&key=AIzaSyDN6CnR706rEeElDTnrix6MC_Qjmq6o1z4";
- //   // Calls the Geocoding API to retrieve the Lat. and Lon. of searched city
- //   $.ajax({
- //     url: queryURL,
- //     method: "GET"
- //   }).then(function(response) {
- //     var latitude = response.results[0].geometry.location.lat;
- //     // console.log(latitude);
- //     var longitude = response.results[0].geometry.location.lng;
- //     // console.log(longitude)
- 
- //     // Function that takes the converted lat and lon and places a marker on that spot with a map around it
- //     function initMap() {
- //       var uluru = { lat: latitude, lng: longitude };
- //       var map = new google.maps.Map(document.getElementById("map"), {
- //         zoom: 13,
- //         center: uluru
- //       });
- 
- //       var marker = new google.maps.Marker({
- //         position: uluru,
- //         map: map
- //       });
- //     }
- 
- //     initMap();
- //   });
- // };
  
  
+//  // var openMap = function() {
+//  //   // Clears the map div
+//  //   $("#map").empty();
+//  //   var apiKey = "AIzaSyDN6CnR706rEeElDTnrix6MC";// plug in key
+//  //   var queryURL =
+//  //     "https://maps.googleapis.com/maps/api/geocode/json?address=" +
+//  //     city +
+//  //     "," +
+//  //     state +
+//  //     "&key=AIzaSyDN6CnR706rEeElDTnrix6MC_Qjmq6o1z4";
+//  //   // Calls the Geocoding API to retrieve the Lat. and Lon. of searched city
+//  //   $.ajax({
+//  //     url: queryURL,
+//  //     method: "GET"
+//  //   }).then(function(response) {
+//  //     var latitude = response.results[0].geometry.location.lat;
+//  //     // console.log(latitude);
+//  //     var longitude = response.results[0].geometry.location.lng;
+//  //     // console.log(longitude)
+ 
+//  //     // Function that takes the converted lat and lon and places a marker on that spot with a map around it
+//  //     function initMap() {
+//  //       var uluru = { lat: latitude, lng: longitude };
+//  //       var map = new google.maps.Map(document.getElementById("map"), {
+//  //         zoom: 13,
+//  //         center: uluru
+//  //       });
+ 
+//  //       var marker = new google.maps.Marker({
+//  //         position: uluru,
+//  //         map: map
+//  //       });
+//  //     }
+ 
+//  //     initMap();
+//  //   });
+//  // };
  
  
  
@@ -311,216 +351,218 @@ var countries = [
  
  
  
- // Things to do after class:
- 
- // 1. Look up google geocoding specifically for countries
- // 2. Make end game results more animated 
- // 3. Add physical hangman features
- // Maybe add a fun fact for when the map and animated message appears
  
  
+//  // Things to do after class:
+ 
+//  // 1. Look up google geocoding specifically for countries
+//  // 2. Make end game results more animated 
+//  // 3. Add physical hangman features
+//  // Maybe add a fun fact for when the map and animated message appears
  
  
- // Countries to use for the real project:
  
- // var countries = [
- //     'Afghanistan',
- //     'Albania',
- //     'Algeria',
- //     'Andorra',
- //     'Angola',
- //     'Anguilla',
- //     'Antigua & Barbuda',
- //     'Argentina',
- //     'Armenia',
- //     'Australia',
- //     'Austria',
- //     'Azerbaijan',
- //     'Bahamas',
- //     'Bahrain',
- //     'Bangladesh',
- //     'Barbados',
- //     'Belarus',
- //     'Belgium',
- //     'Belize',
- //     'Benin',
- //     'Bermuda',
- //     'Bhutan',
- //     'Bolivia',
- //     'Bosnia & Herzegovina',
- //     'Botswana',
- //     'Brazil',
- //     'Brunei Darussalam',
- //     'Bulgaria',
- //     'Burkina Faso',
- //     'Myanmar/Burma',
- //     'Burundi',
- //     'Cambodia',
- //     'Cameroon',
- //     'Canada',
- //     'Cape Verde',
- //     'Cayman Islands',
- //     'Central African Republic',
- //     'Chad',
- //     'Chile',
- //     'China',
- //     'Colombia',
- //     'Comoros',
- //     'Congo',
- //     'Costa Rica',
- //     'Croatia',
- //     'Cuba',
- //     'Cyprus',
- //     'Czech Republic',
- //     'Democratic Republic of the Congo',
- //     'Denmark',
- //     'Djibouti',
- //     'Dominica',
- //     'Dominican Republic',
- //     'Ecuador',
- //     'Egypt',
- //     'El Salvador',
- //     'Equatorial Guinea',
- //     'Eritrea',
- //     'Estonia',
- //     'Ethiopia',
- //     'Fiji',
- //     'Finland',
- //     'France',
- //     'French Guiana',
- //     'Gabon',
- //     'Gambia',
- //     'Georgia',
- //     'Germany',
- //     'Ghana',
- //     'Great Britain',
- //     'Greece',
- //     'Grenada',
- //     'Guadeloupe',
- //     'Guatemala',
- //     'Guinea',
- //     'Guinea-Bissau',
- //     'Guyana',
- //     'Haiti',
- //     'Honduras',
- //     'Hungary',
- //     'Iceland',
- //     'India',
- //     'Indonesia',
- //     'Iran',
- //     'Iraq',
- //     'Israel and the Occupied Territories',
- //     'Italy',
- //     "Ivory Coast (Cote d'Ivoire)",
- //     'Jamaica',
- //     'Japan',
- //     'Jordan',
- //     'Kazakhstan',
- //     'Kenya',
- //     'Kosovo',
- //     'Kuwait',
- //     'Kyrgyz Republic (Kyrgyzstan)',
- //     'Laos',
- //     'Latvia',
- //     'Lebanon',
- //     'Lesotho',
- //     'Liberia',
- //     'Libya',
- //     'Liechtenstein',
- //     'Lithuania',
- //     'Luxembourg',
- //     'Republic of Macedonia',
- //     'Madagascar',
- //     'Malawi',
- //     'Malaysia',
- //     'Maldives',
- //     'Mali',
- //     'Malta',
- //     'Martinique',
- //     'Mauritania',
- //     'Mauritius',
- //     'Mayotte',
- //     'Mexico',
- //     'Moldova, Republic of Monaco',
- //     'Mongolia',
- //     'Montenegro',
- //     'Montserrat',
- //     'Morocco',
- //     'Mozambique',
- //     'Namibia',
- //     'Nepal',
- //     'Netherlands',
- //     'New Zealand',
- //     'Nicaragua',
- //     'Niger',
- //     'Nigeria',
- //     'North Korea',
- //     'Norway',
- //     'Oman',
- //     'Pacific Islands',
- //     'Pakistan',
- //     'Panama',
- //     'Papua New Guinea',
- //     'Paraguay',
- //     'Peru',
- //     'Philippines',
- //     'Poland',
- //     'Portugal',
- //     'Puerto Rico',
- //     'Qatar',
- //     'Reunion',
- //     'Romania',
- //     'Russian Federation',
- //     'Rwanda',
- //     'Saint Kitts and Nevis',
- //     'Saint Lucia',
- //     "Saint Vincent's & Grenadines",
- //     'Samoa',
- //     'Sao Tome and Principe',
- //     'Saudi Arabia',
- //     'Senegal',
- //     'Serbia',
- //     'Seychelles',
- //     'Sierra Leone',
- //     'Singapore',
- //     'Slovak Republic (Slovakia)',
- //     'Slovenia',
- //     'Solomon Islands',
- //     'Somalia',
- //     'South Africa',
- //     'South Korea',
- //     'South Sudan',
- //     'Spain',
- //     'Sri Lanka',
- //     'Sudan',
- //     'Suriname',
- //     'Swaziland',
- //     'Sweden',
- //     'Switzerland',
- //     'Syria',
- //     'Tajikistan',
- //     'Tanzania',
- //     'Thailand',
- //     'Timor Leste',
- //     'Togo',
- //     'Trinidad & Tobago',
- //     'Tunisia',
- //     'Turkey',
- //     'Turkmenistan',
- //     'Turks & Caicos Islands',
- //     'Uganda',
- //     'Ukraine',
- //     'United Arab Emirates',
- //     'United States of America (USA)',
- //     'Uruguay',
- //     'Uzbekistan',
- //     'Venezuela',
- //     'Vietnam',
- //     'Virgin Islands (UK)',
- //     'Virgin Islands (US)',
- //     'Yemen',
- //     'Zambia',
- //     'Zimbabwe'];
+ 
+//  // Countries to use for the real project:
+ 
+//  // var countries = [
+//  //     'Afghanistan',
+//  //     'Albania',
+//  //     'Algeria',
+//  //     'Andorra',
+//  //     'Angola',
+//  //     'Anguilla',
+//  //     'Antigua & Barbuda',
+//  //     'Argentina',
+//  //     'Armenia',
+//  //     'Australia',
+//  //     'Austria',
+//  //     'Azerbaijan',
+//  //     'Bahamas',
+//  //     'Bahrain',
+//  //     'Bangladesh',
+//  //     'Barbados',
+//  //     'Belarus',
+//  //     'Belgium',
+//  //     'Belize',
+//  //     'Benin',
+//  //     'Bermuda',
+//  //     'Bhutan',
+//  //     'Bolivia',
+//  //     'Bosnia & Herzegovina',
+//  //     'Botswana',
+//  //     'Brazil',
+//  //     'Brunei Darussalam',
+//  //     'Bulgaria',
+//  //     'Burkina Faso',
+//  //     'Myanmar/Burma',
+//  //     'Burundi',
+//  //     'Cambodia',
+//  //     'Cameroon',
+//  //     'Canada',
+//  //     'Cape Verde',
+//  //     'Cayman Islands',
+//  //     'Central African Republic',
+//  //     'Chad',
+//  //     'Chile',
+//  //     'China',
+//  //     'Colombia',
+//  //     'Comoros',
+//  //     'Congo',
+//  //     'Costa Rica',
+//  //     'Croatia',
+//  //     'Cuba',
+//  //     'Cyprus',
+//  //     'Czech Republic',
+//  //     'Democratic Republic of the Congo',
+//  //     'Denmark',
+//  //     'Djibouti',
+//  //     'Dominica',
+//  //     'Dominican Republic',
+//  //     'Ecuador',
+//  //     'Egypt',
+//  //     'El Salvador',
+//  //     'Equatorial Guinea',
+//  //     'Eritrea',
+//  //     'Estonia',
+//  //     'Ethiopia',
+//  //     'Fiji',
+//  //     'Finland',
+//  //     'France',
+//  //     'French Guiana',
+//  //     'Gabon',
+//  //     'Gambia',
+//  //     'Georgia',
+//  //     'Germany',
+//  //     'Ghana',
+//  //     'Great Britain',
+//  //     'Greece',
+//  //     'Grenada',
+//  //     'Guadeloupe',
+//  //     'Guatemala',
+//  //     'Guinea',
+//  //     'Guinea-Bissau',
+//  //     'Guyana',
+//  //     'Haiti',
+//  //     'Honduras',
+//  //     'Hungary',
+//  //     'Iceland',
+//  //     'India',
+//  //     'Indonesia',
+//  //     'Iran',
+//  //     'Iraq',
+//  //     'Israel and the Occupied Territories',
+//  //     'Italy',
+//  //     "Ivory Coast (Cote d'Ivoire)",
+//  //     'Jamaica',
+//  //     'Japan',
+//  //     'Jordan',
+//  //     'Kazakhstan',
+//  //     'Kenya',
+//  //     'Kosovo',
+//  //     'Kuwait',
+//  //     'Kyrgyz Republic (Kyrgyzstan)',
+//  //     'Laos',
+//  //     'Latvia',
+//  //     'Lebanon',
+//  //     'Lesotho',
+//  //     'Liberia',
+//  //     'Libya',
+//  //     'Liechtenstein',
+//  //     'Lithuania',
+//  //     'Luxembourg',
+//  //     'Republic of Macedonia',
+//  //     'Madagascar',
+//  //     'Malawi',
+//  //     'Malaysia',
+//  //     'Maldives',
+//  //     'Mali',
+//  //     'Malta',
+//  //     'Martinique',
+//  //     'Mauritania',
+//  //     'Mauritius',
+//  //     'Mayotte',
+//  //     'Mexico',
+//  //     'Moldova, Republic of Monaco',
+//  //     'Mongolia',
+//  //     'Montenegro',
+//  //     'Montserrat',
+//  //     'Morocco',
+//  //     'Mozambique',
+//  //     'Namibia',
+//  //     'Nepal',
+//  //     'Netherlands',
+//  //     'New Zealand',
+//  //     'Nicaragua',
+//  //     'Niger',
+//  //     'Nigeria',
+//  //     'North Korea',
+//  //     'Norway',
+//  //     'Oman',
+//  //     'Pacific Islands',
+//  //     'Pakistan',
+//  //     'Panama',
+//  //     'Papua New Guinea',
+//  //     'Paraguay',
+//  //     'Peru',
+//  //     'Philippines',
+//  //     'Poland',
+//  //     'Portugal',
+//  //     'Puerto Rico',
+//  //     'Qatar',
+//  //     'Reunion',
+//  //     'Romania',
+//  //     'Russian Federation',
+//  //     'Rwanda',
+//  //     'Saint Kitts and Nevis',
+//  //     'Saint Lucia',
+//  //     "Saint Vincent's & Grenadines",
+//  //     'Samoa',
+//  //     'Sao Tome and Principe',
+//  //     'Saudi Arabia',
+//  //     'Senegal',
+//  //     'Serbia',
+//  //     'Seychelles',
+//  //     'Sierra Leone',
+//  //     'Singapore',
+//  //     'Slovak Republic (Slovakia)',
+//  //     'Slovenia',
+//  //     'Solomon Islands',
+//  //     'Somalia',
+//  //     'South Africa',
+//  //     'South Korea',
+//  //     'South Sudan',
+//  //     'Spain',
+//  //     'Sri Lanka',
+//  //     'Sudan',
+//  //     'Suriname',
+//  //     'Swaziland',
+//  //     'Sweden',
+//  //     'Switzerland',
+//  //     'Syria',
+//  //     'Tajikistan',
+//  //     'Tanzania',
+//  //     'Thailand',
+//  //     'Timor Leste',
+//  //     'Togo',
+//  //     'Trinidad & Tobago',
+//  //     'Tunisia',
+//  //     'Turkey',
+//  //     'Turkmenistan',
+//  //     'Turks & Caicos Islands',
+//  //     'Uganda',
+//  //     'Ukraine',
+//  //     'United Arab Emirates',
+//  //     'United States of America (USA)',
+//  //     'Uruguay',
+//  //     'Uzbekistan',
+//  //     'Venezuela',
+//  //     'Vietnam',
+//  //     'Virgin Islands (UK)',
+//  //     'Virgin Islands (US)',
+//  //     'Yemen',
+//  //     'Zambia',
+//  //     'Zimbabwe'];
  
  
  
