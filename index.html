@@ -15,6 +15,7 @@
 
 
 <!-- Introduction -->
+
 <body>
     <h1 class="text-center">Hangman with Google Maps API Beta</h1>
     <p class="text-center">The theme of this game is Countries. Can you guess the correct country?</p>
@@ -22,8 +23,8 @@
 
     <!-- The structure of the hangman figure -->
     <div class="container-fluid">
-        <div class="row"> 
-             <div class="col-sm-8 mx-auto"> 
+        <div class="row">
+            <div class="col-sm-8 mx-auto">
                 <div class='hangContain mx-auto'>
                     <div class='postUp hangman-piece'></div>
                     <div class='postRight hangman-piece'></div>
@@ -62,22 +63,11 @@
     <!-- Instructions Section -->
     <div class="text-center">
         <h1 class="instructions">Instructions</h1>
-        <p class="instructions">In this demo you will have 10 attempts to guess the randomly selected country. *For this prototype, only 10 countires will be used which are the following:
-                 (Spain,
-                Portugal,
-                Peru,
-                Switzerland,
-                Belgium,
-                France,
-                Croatia,
-                Japan,
-                Taiwan,
-                Brazil,
-                Paraguay,
-                Columbia)
-            .The map provided below will start
-            in the United States. If the country is guessed correctly, the country will be displayed on the map provided
-            below. If the country was not correctly guessed, then you lose! </p>
+        <p class="instructions">In this demo you will have 10 attempts to guess the randomly selected country with the animated letters provided
+            under the instructions. *For this prototype, only 10 countires will be used which are the following: (Spain,
+            Portugal, Peru, Switzerland, Belgium, France, Croatia, Japan, Taiwan, Brazil, Paraguay, Columbia) .The map provided
+            below will start in the United States. If the country is guessed correctly, the country will be displayed on
+            the map provided below. If the country was not correctly guessed, then you lose! </p>
     </div>
     <!-- Instructions Section /-->
 
@@ -94,29 +84,31 @@
     <!-- platform of the list of letters to choose from /-->
 
 
-<!-- Modal Section -->
-<div id="modalWin">
-    <div class="modal fade" id="result-modal" tabindex="-1" role="dialog">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="game-result"></h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <p style="color: #182848">Click either the exit (x) button on the top right of this modal, or click the "Close" button to see the country that you attempted to guess.</p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Try Again</button>  <!-- Add a try again feature after submitting the prototype version -->
-            </div>
+    <!-- Modal Section -->
+    <div id="modalWin">
+        <div class="modal fade"  id="result-modal" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="game-result"></h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <p style="color: #182848">Click either the exit (x) button on the top right of this modal, or click the "Close" button to see
+                            the country that you attempted to guess. Or Press the "Play Again" button to try again</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                        <button type="button" id="restart" class="btn btn-primary">Try Again</button>
+                        <!-- Add a try again feature after submitting the prototype version -->
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-</div>
-<!-- Modal Section /-->
+    <!-- Modal Section /-->
 
 
 
@@ -127,16 +119,16 @@
         <h2 id=text-center>Location of Country</h2>
         <form id="location-form">
             <input type="text" id="location-input" class="form-control form-control-lg">
-        <br>
-        <button type="submit" class="btn btn-outline-success btn-block">Submit</button>
+            <br>
+            <button type="submit" class="btn btn-outline-primary btn-block">Submit</button>
         </form>
         <div class="card-block" id="formatted-address"></div>
         <div id="address-components"></div>
         <div id="geometry"></div>
     </div>
-    
-    
-<!-- Geocode Section /-->
+
+
+    <!-- Geocode Section /-->
 
 
 
@@ -158,9 +150,12 @@
 
 
 
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T"
+        crossorigin="anonymous"></script>
 
 
     <script src="assets/javascript/hangman.js"></script>

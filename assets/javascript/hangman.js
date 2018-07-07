@@ -33,7 +33,7 @@ var countries = [
  
  // Define what userGuess variable will be
  var userGuess;
- console.log(selectedCountry);
+//  console.log(selectedCountry);
  
  // to randomly select the country to be guessed
  function selectRandomCountry() {
@@ -55,17 +55,7 @@ var countries = [
          }
      }
  }
- 
- // <div class='postUp hangman-piece'></div>
- // <div class='postRight hangman-piece'></div>
- // <div class='rope hangman-piece'></div>
- // <div class='head hangman-piece'></div>
- // <div class='body hangman-piece'></div>
- // <div class='leftArm hangman-piece'></div>
- // <div class='rightArm hangman-piece'></div>
- // <div class='leftLeg hangman-piece'></div>
- // <div class='rightLeg hangman-piece'></div>
- // <div class='floor hangman-piece'></div>
+
  
  var hangmanPieces = ['.postUp', '.postRight', '.rope', '.head', '.body', '.leftArm', '.rightArm', '.leftLeg', '.rightLeg', '.floor'];
  
@@ -86,16 +76,15 @@ var countries = [
          // Push the userguess into the incorrectGuesses array
          incorrectGuesses.push(userGuess);
          totalAttempts++;
-         console.log("You are incorrect!");
+        //  console.log("You are incorrect!");
      }  
      if  ( selectedCountry.indexOf(userGuess) >= 0 && correctGuesses.indexOf(userGuess) < 0 ) {
          totalAttempts++;
          checkForGuess(userGuess);
- 
-         correctGuesses.push(userGuess);
-     }
-     // if statement if guess is correct
-     
+         correctGuesses.push(userGuess);  
+         
+        //  $('#letterbtn').css('disabled aria-disabled="true"');
+            } 
      gameStatistics();
      gameResults();
  }
@@ -230,6 +219,14 @@ var openMap = function(country) {
          openMap(randomCountry);
      }
  }
+
+ function gameRestart () {
+    var restart = document.getElementById('restart');
+    restart.addEventListener('click', function() {
+        location.reload();
+    })
+ }
+ gameRestart();
  
  
  
@@ -338,29 +335,7 @@ var openMap = function(country) {
 //  //     initMap();
 //  //   });
 //  // };
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
-//  // Things to do after class:
- 
-//  // 1. Look up google geocoding specifically for countries
-//  // 2. Make end game results more animated 
-//  // 3. Add physical hangman features
-//  // Maybe add a fun fact for when the map and animated message appears
+
  
  
  

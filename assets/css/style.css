@@ -4,12 +4,12 @@
 }
 
 h1 {
-    color: darkgreen;
+    color: #4b6cb7;
     margin-top: 15px;
 }
 
 p {
-    color: darkgreen;
+    color: #4b6cb7;
 }
 
 .instructions {
@@ -43,6 +43,7 @@ p {
 
   .gameStats {
       margin-top: 20px;
+      margin-left: 20px;
   }
 
   #chances {
@@ -74,8 +75,9 @@ p {
  #underscores {
      text-align: center;
      letter-spacing: 10px;
-     color: white;  
-     
+     color: #348AC7;  
+     border: 1px solid #348AC7;
+     margin: 0 200px;  
  }
 
 
@@ -101,6 +103,11 @@ button#letterbtn {
     cursor: pointer;
 }
 
+#letters {
+    border: 2px dashed #0072ff;
+    border-radius: 5px;
+    margin: 25px 200px;
+}
 /* To custimize the buttons for the alphabet  / */
 
 
@@ -223,3 +230,23 @@ button#letterbtn {
 /* Hangman pieces (in order)  / */
 
 /* Hangman Strucuture / */
+
+
+/* Styling for Modal */
+ div#result-modal.modal.fade.show {
+    transition: opacity 2s linear;
+    transition-property: opacity;
+    transition-duration: 2s;
+    transition-timing-function: linear;
+    transition-delay: initial;
+}  
+
+div#result-modal.modal.fade:not(.show) {
+    transition: opacity 2s linear;
+    transition-property: opacity;
+    transition-duration: 2s;
+    transition-timing-function: linear;
+    transition-delay: initial;
+}
+   
+ /* Styling for Modal  / */
