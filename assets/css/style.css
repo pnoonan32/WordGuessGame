@@ -87,6 +87,10 @@ p {
     margin: 30px auto;
 }
 
+button#restart.btn.btn-primary {
+    margin: 20px;
+}
+
 .container {
     margin-top: 50px;
 }
