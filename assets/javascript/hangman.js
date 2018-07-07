@@ -170,28 +170,36 @@ var countries = [
 
 
 var openMap = function(country) {
+    console.log(country)
+    geocode(null, country)
   // Clears the map div
-  $("#map").empty();
-  var apiKey = "AIzaSyDN6CnR706rEeElDTnrix6MC";// plug in key
-  var queryURL =
-    "https://maps.googleapis.com/maps/api/geocode/json?address=" +
-    country +
-    "&key=AIzaSyDN6CnR706rEeElDTnrix6MC_Qjmq6o1z4";
-  // Calls the Geocoding API to retrieve the Lat. and Lon. of searched city
-  $.ajax({
-    url: queryURL,
-    method: "GET"
-  }).then(function(response) {
-    var latitude = response.results[0].geometry.location.lat;
-    // console.log(latitude);
-    var longitude = response.results[0].geometry.location.lng;
-    // console.log(longitude)
+//   $("#map").empty();
+    var apiKey = "AIzaSyDN6CnR706rEeElDTnrix6MC";// plug in key
+    var queryURL = `https://maps.googleapis.com/maps/api/geocode/json?address=${country}&key=AIzaSyDN6CnR706rEeElDTnrix6MC_Qjmq6o1z4`;
+//   // Calls the Geocoding API to retrieve the Lat. and Lon. of searched city
+fetch(queryURL).then(function (response) {
+    if (response.status !== 200) {
+        console.log('there was an error querying that location')
+    }
 
-    // Function that takes the converted lat and lon and places a marker on that spot with a map around it
+    response.json().then(function (data) {
+        var latitude = data.results[0].geometry.location.lat;
+        var longitude = data.results[0].geometry.location.lng;
+
+        initMap(latitude, longitude);
+    })
+})
+// $.get(queryURL).then(function(response) {
+//     console.log({response})
+//      var latitude = response.results[0].geometry.location.lat; console.log(latitude);
+//      var longitude = response.results[0].geometry.location.lng;
+//      console.log(longitude);
+
+// // Function that takes the converted lat and lon and places a marker on that spot with a map around it
     
 
-    initMap(latitude, longitude);
-  });
+//      initMap(latitude, longitude);
+//    });
 };
 
 
@@ -216,6 +224,7 @@ var openMap = function(country) {
          $('#victory-modal').show()
          gameResult.html('Congratulations, you guessed the randomly selected country!!');
          modal.modal('show');
+         console.log({randomCountry: randomCountry});
          openMap(randomCountry);
      }
  }
@@ -226,7 +235,7 @@ var openMap = function(country) {
         location.reload();
     })
  }
- gameRestart();
+ gameRestart()
  
  
  
@@ -234,65 +243,68 @@ var openMap = function(country) {
 //   // Call Geocode
 //      // geocode();
  
-//      // Get location form
-//      var locationForm = document.getElementById('location-form');
+     // Get location form
+     var locationForm = document.getElementById('location-form');
  
-//  // Listen for submit
-//  locationForm.addEventListener('submit', geocode);
+ // Listen for submit
+ locationForm.addEventListener('submit', geocode);
  
-//  function geocode(event){
-//    // Prevent actual submit
-//    event.preventDefault();
+ function geocode(event, country){
+   // Prevent actual submit
+   if (event) event.preventDefault();
  
-//    var location = document.getElementById('location-input').value;
+   var location = document.getElementById('location-input').value || country;
  
-//    axios.get('https://maps.googleapis.com/maps/api/geocode/json',{
-//      params:{
-//        address:location,
-//        key:'AIzaSyDN6CnR706rEeElDTnrix6MC_Qjmq6o1z4'
-//      }
-//    })
-//    .then(function(response){
-//      // Log full response
-//      console.log(response);
+   axios.get('https://maps.googleapis.com/maps/api/geocode/json',{
+     params:{
+       address:location,
+       key:'AIzaSyDN6CnR706rEeElDTnrix6MC_Qjmq6o1z4'
+     }
+   })
+   .then(function(response){
+     // Log full response
+     console.log({response});
  
-//      // Formatted Address
-//      var formattedAddress = response.data.results[0].formatted_address;
-//      var formattedAddressOutput = `
-//        <ul class="list-group">
-//          <li class="list-group-item">${formattedAddress}</li>
-//        </ul>
-//      `;
+     // Formatted Address
+     var formattedAddress = response.data.results[0].formatted_address;
+     var formattedAddressOutput = `
+       <ul class="list-group">
+         <li class="list-group-item">${formattedAddress}</li>
+       </ul>
+     `;
  
-//      // Address Components
-//      var addressComponents = response.data.results[0].address_components;
-//      var addressComponentsOutput = '<ul class="list-group">';
-//      for(var i = 0; i < addressComponents.length;i++){
-//        addressComponentsOutput += `
-//          <li class="list-group-item"><strong>${addressComponents[i].types[0]}</strong>: ${addressComponents[i].long_name}</li>
-//        `;
-//      }
-//      addressComponentsOutput += '</ul>';
+     // Address Components
+     var addressComponents = response.data.results[0].address_components;
+     var addressComponentsOutput = '<ul class="list-group">';
+     for(var i = 0; i < addressComponents.length;i++){
+       addressComponentsOutput += `
+         <li class="list-group-item"><strong>${addressComponents[i].types[0]}</strong>: ${addressComponents[i].long_name}</li>
+       `;
+     }
+     addressComponentsOutput += '</ul>';
  
-//      // Geometry
-//      var lat = response.data.results[0].geometry.location.lat;
-//      var lng = response.data.results[0].geometry.location.lng;
-//      var geometryOutput = `
-//        <ul class="list-group">
-//          <li class="list-group-item"><strong>Latitude</strong>: ${lat}</li>
-//          <li class="list-group-item"><strong>Longitude</strong>: ${lng}</li>
-//        </ul>
-//      `;
+     // Geometry
+     var lat = response.data.results[0].geometry.location.lat;
+     var lng = response.data.results[0].geometry.location.lng;
+
+     initMap(lat, lng);
+
+     var geometryOutput = `
+       <ul class="list-group">
+         <li class="list-group-item"><strong>Latitude</strong>: ${lat}</li>
+         <li class="list-group-item"><strong>Longitude</strong>: ${lng}</li>
+       </ul>
+     `;
  
-//      // Output to app
-//      document.getElementById('formatted-address').innerHTML = formattedAddressOutput;
-//      document.getElementById('address-components').innerHTML = addressComponentsOutput;
-//      document.getElementById('geometry').innerHTML = geometryOutput;
-//    })
-//    .catch(function(error){
-//      console.log(error);
-//    });
-//  }
+     // Output to app
+     document.getElementById('formatted-address').innerHTML = formattedAddressOutput;
+     document.getElementById('address-components').innerHTML = addressComponentsOutput;
+     document.getElementById('geometry').innerHTML = geometryOutput;
+   })
+   .catch(function(error){
+     console.log(error);
+   });
+ }
  
  
  

@@ -65,9 +65,8 @@
         <h1 class="instructions">Instructions</h1>
         <p class="instructions">In this demo you will have 10 attempts to guess the randomly selected country with the animated letters provided
             under the instructions. *For this prototype, only 10 countires will be used which are the following: (Spain,
-            Portugal, Peru, Switzerland, Belgium, France, Croatia, Japan, Taiwan, Brazil, Paraguay, Columbia) .The map provided
-            below will start in the United States. If the country is guessed correctly, the country will be displayed on
-            the map provided below. If the country was not correctly guessed, then you lose! </p>
+            Portugal, Peru, Switzerland, Belgium, France, Croatia, Japan, Taiwan, Brazil, Paraguay, Columbia). You can track your progress throughout the game with the provided statsitics above the instructions heading. If the country is guessed correctly, the country will be displayed on
+            the map provided below along with it's geolocation.Also, If the country was not correctly guessed, then you lose! </p>
     </div>
     <!-- Instructions Section /-->
 
@@ -121,6 +120,8 @@
             <input type="text" id="location-input" class="form-control form-control-lg">
             <br>
             <button type="submit" class="btn btn-outline-primary btn-block">Submit</button>
+            <br>
+            <p>Please feel free to type in any address, state, or country you wish with the provided search bar!</p>
         </form>
         <div class="card-block" id="formatted-address"></div>
         <div id="address-components"></div>
@@ -145,9 +146,11 @@
         }
     </script> -->
 
-    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDN6CnR706rEeElDTnrix6MC_Qjmq6o1z4&callback=initMap"></script>
+    <!-- <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDN6CnR706rEeElDTnrix6MC_Qjmq6o1z4&callback=initMap"></script> -->
     <!-- Google API Code /-->
 
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDN6CnR706rEeElDTnrix6MC_Qjmq6o1z4&callback=initMap"
+    async defer></script>
 
 
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
